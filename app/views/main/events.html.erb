@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">CBD Bookings</div>
+
+    <!-- Table -->
+    <table class="table">
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Phone</th>
+        <th>Email</th>
+      </tr>
+      <% @cbdArray.each do |event| %>
+          <tr>
+            <td><%= event[:firstName] %></td>
+            <td><%= event[:lastName] %></td>
+            <td><%= event[:phone] %></td>
+            <td><%= event[:email] %></td>
+          </tr>
+          <% end %>
+    </table>
+  </div>
+
+  <div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Call Out Bookings</div>
+
+    <!-- Table -->
+    <table class="table">
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Address</th>
+      </tr>
+      <% @calloutArray.each do |event| %>
+          <tr>
+            <td><%= event[:firstName] %></td>
+            <td><%= event[:lastName] %></td>
+            <td><%= event[:phone] %></td>
+            <td><%= event[:email] %></td>
+            <td><%= event[:address] %></td>
+
+          </tr>
+      <% end %>
+      <%= link_to "Download", controller: "main", action: "downloadCSV" %>
+    </table>
+  </div>
+</div>
