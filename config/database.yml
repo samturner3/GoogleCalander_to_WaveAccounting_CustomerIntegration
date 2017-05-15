@@ -29,3 +29,5 @@ production:
   encoding: utf8
   database: db/project_production
   pool: 5
+  username:
+  password:
