@@ -5,6 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem 'devise'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'google-api-client', '~> 0.9', require: 'google/apis/calendar_v3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
