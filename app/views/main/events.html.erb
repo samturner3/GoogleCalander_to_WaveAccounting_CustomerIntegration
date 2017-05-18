@@ -10,6 +10,8 @@
         <th>Last Name</th>
         <th>Phone</th>
         <th>Email</th>
+        <th>Day</th>
+        <th>Time</th>
       </tr>
       <% @cbdArray.each do |event| %>
           <tr>
@@ -17,6 +19,8 @@
             <td><%= event[:lastName] %></td>
             <td><%= event[:phone] %></td>
             <td><%= event[:email] %></td>
+            <td><%= event[:bookingDateTime].strftime("%A") %></td>
+            <td><%= event[:bookingDateTime].strftime("%I:%M %p") %></td>
           </tr>
           <% end %>
     </table>

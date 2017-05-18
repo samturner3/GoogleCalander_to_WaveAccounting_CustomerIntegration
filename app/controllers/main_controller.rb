@@ -72,6 +72,10 @@ class MainController < ApplicationController
     @event_list.items.each do |event|
       if event.summary.start_with?('Sydney CBD')
 
+        bookingDateTime = event.start.date_time
+        puts "Date:#{bookingDateTime}"
+        puts "^" * 40
+
         nameAndNumber = event.summary.partition('for').last
         phone = nameAndNumber.gsub(/[^\d]/, '')
         puts "Phone: #{phone}"
@@ -89,7 +93,7 @@ class MainController < ApplicationController
 
         puts "*" * 40
 
-        cbdEventsHash = { :firstName => firstName, :lastName => lastName, :phone => phone, :email => email }
+        cbdEventsHash = { :firstName => firstName, :lastName => lastName, :phone => phone, :email => email, :bookingDateTime => bookingDateTime }
         @cbdArray.push(cbdEventsHash)
 
       end #end loop
