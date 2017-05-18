@@ -2,8 +2,8 @@ class MainController < ApplicationController
 
   def redirect
     client = Signet::OAuth2::Client.new({
-      client_id: Rails.application.secrets.google_client_id,
-      client_secret: Rails.application.secrets.google_client_secret,
+      client_id: ENV["GOOGLE_CLIENT_ID"],
+      client_secret: ENV["GOOGLE_CLIENT_SECRET"],
       authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
       scope: Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY,
       redirect_uri: callback_url
@@ -14,8 +14,8 @@ class MainController < ApplicationController
 
   def callback
       client = Signet::OAuth2::Client.new({
-        client_id: Rails.application.secrets.google_client_id,
-        client_secret: Rails.application.secrets.google_client_secret,
+        client_id: ENV["GOOGLE_CLIENT_ID"],
+        client_secret: ENV["GOOGLE_CLIENT_SECRET"],
         token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
         redirect_uri: callback_url,
         code: params[:code]

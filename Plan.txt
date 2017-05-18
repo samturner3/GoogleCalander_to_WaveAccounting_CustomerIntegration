@@ -1,0 +1,16 @@
+1. Import events from google events calendars
+
+a>)  if client from event does not exist (email lookup)
+      <create client>
+    end
+
+b>) if booking from event does not exist ()
+      <create booking> and attach client
+    elsif exists but changed details
+      <update event>
+      if client already attached to event
+        <check client is same as already assigned client>
+      end
+    end
+
+2.
