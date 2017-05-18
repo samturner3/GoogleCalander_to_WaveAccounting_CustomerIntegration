@@ -8,6 +8,11 @@ class MainController < ApplicationController
       scope: Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY,
       redirect_uri: callback_url
     })
+    puts '*' * 40
+
+    puts client.authorization_uri.to_s
+    puts '^' * 40
+    # exit
 
     redirect_to client.authorization_uri.to_s
   end
