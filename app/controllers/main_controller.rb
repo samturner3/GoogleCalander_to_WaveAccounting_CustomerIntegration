@@ -72,6 +72,7 @@ class MainController < ApplicationController
     @event_list.items.each do |event|
       if event.summary.start_with?('Sydney CBD')
 
+
         bookingDateTime = event.start.date_time
         puts "Date:#{bookingDateTime}"
         puts "^" * 40
@@ -92,6 +93,18 @@ class MainController < ApplicationController
         puts "Email: #{email}"
 
         puts "*" * 40
+
+        # Check if exists
+        # if new,
+          @newBooking = new.Booking
+
+          # @newBooking.firstName = firstName
+          # @newBooking.lastName = lastName
+          # @newBooking.mobile = phone
+          # @newBooking.email = email
+          # @newBooking.clientNotes = "Test Notes"
+          # @newBooking.address = null
+
 
         cbdEventsHash = { :firstName => firstName, :lastName => lastName, :phone => phone, :email => email, :bookingDateTime => bookingDateTime }
         @cbdArray.push(cbdEventsHash)
@@ -133,9 +146,6 @@ class MainController < ApplicationController
 
         calloutEventsHash = { :firstName => firstName, :lastName => lastName, :phone => phone, :email => email, :address => event.location }
         @calloutArray.push(calloutEventsHash)
-
-
-
 
       end #end loop
     end #end loop

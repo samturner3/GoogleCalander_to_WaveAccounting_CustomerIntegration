@@ -8,10 +8,12 @@ Rails.application.routes.draw do
 root 'main#redirect'
 
 get '/redirect', to: 'main#redirect', as: 'redirect'
-get '/callback', to: 'main#callback', as: 'callback'
+get '/callback', to: 'bookings#new', as: 'callback'
 get '/calendars', to: 'main#calendars', as: 'calendars'
 get '/events/:calendar_id', to: 'main#events', as: 'events', calendar_id: /[^\/]+/
 get '/calendars/downloadCBD', to: 'main#downloadCBD'
 get '/calendars/downloadCALLOUT', to: 'main#downloadCALLOUT'
+
+get '/bookings/index', to: 'bookings#index'
 
 end
