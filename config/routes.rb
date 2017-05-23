@@ -16,4 +16,6 @@ get '/calendars/downloadCALLOUT', to: 'main#downloadCALLOUT'
 
 get '/bookings/index', to: 'bookings#index'
 
+get '/clients/index', to: 'clients#index'
+
 end

@@ -5,10 +5,8 @@ class BookingsController < ApplicationController
   # GET /bookings
   # GET /bookings.json
   def index
-    @bookings = Booking.all
+    @bookings = Booking.all.order 'created_at DESC'
     @clients = Client.all
-
-    format.csv { send_data @bookings.to_csv, filename: "bookings-#{Date.today}.csv" }
   end
 
   # GET /bookings/1
@@ -37,7 +35,7 @@ class BookingsController < ApplicationController
       if Client.find_by email: hash[:email]
 
         puts '*' * 40
-        puts 'Found Duplucate Client! Updating Record'
+        puts 'Found Duplucate Client! Checking Record for Updates'
         puts hash[:email]
         puts '^' * 40
 
@@ -68,7 +66,7 @@ class BookingsController < ApplicationController
       if Booking.find_by googleEventId: hash[:googleEventId]
 
         puts '*' * 40
-        puts 'Found Duplucate Booking! Updating Record'
+        puts 'Found Duplucate Booking! Checking Record for Updates'
         puts hash[:googleEventId]
         puts '^' * 40
 
