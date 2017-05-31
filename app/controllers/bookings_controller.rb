@@ -4,6 +4,25 @@ class BookingsController < ApplicationController
 
   # GET /bookings
   # GET /bookings.json
+
+  def redirect
+    @client = Signet::OAuth2::Client.new({
+      client_id: ENV["GOOGLE_CLIENT_ID"],
+      client_secret: ENV["GOOGLE_CLIENT_SECRET"],
+      authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
+      scope: Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY,
+      redirect_uri: callback_url
+    })
+    puts '*' * 40
+
+    puts @client.authorization_uri.to_s
+    puts '^' * 40
+    # exit
+
+    redirect_to @client.authorization_uri.to_s
+  end
+
+
   def index
     @bookings = Booking.all.order 'created_at DESC'
     @clients = Client.all
@@ -155,7 +174,7 @@ class BookingsController < ApplicationController
     end
 
     def getCBDBookingsFromGoogle
-      client = Signet::OAuth2::Client.new({
+      @client = Signet::OAuth2::Client.new({
         client_id: ENV["GOOGLE_CLIENT_ID"],
         client_secret: ENV["GOOGLE_CLIENT_SECRET"],
         token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
@@ -163,9 +182,31 @@ class BookingsController < ApplicationController
         code: params[:code]
       })
 
-      response = client.fetch_access_token!
+      puts '*' * 40
+      puts 'CLIENT'
+      puts '*' * 40
+      puts @client
+      puts '^' * 40
+      puts ''
+
+      # exit
+
+      response = @client.fetch_access_token!
+
+      puts '*' * 40
+      puts 'response / Access Token:'
+      puts '*' * 40
+      puts response
+      puts '^' * 40
+      puts ''
 
       session[:authorization] = response
+
+      puts '*' * 40
+      puts 'session[:authorization] = response:'
+      puts '*' * 40
+      puts session[:authorization]
+      puts '^' * 40
 
       # client = Signet::OAuth2::Client.new({
       #   client_id: Rails.application.secrets.google_client_id,
@@ -178,7 +219,7 @@ class BookingsController < ApplicationController
 
 
       service = Google::Apis::CalendarV3::CalendarService.new
-      service.authorization = client
+      service.authorization = @client
 
       # puts '*' * 40
       #
