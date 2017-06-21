@@ -112,7 +112,7 @@ class MainController < ApplicationController
     calloutEventsHash = {}
 
     @event_list.items.each do |event|
-      if event.summary.start_with?('We come to you')
+      if event.summary.start_with?('Call Out', 'Sydney CBD')
 
         nameAndNumber = event.summary.partition('for').last
         phone = nameAndNumber.gsub(/[^\d]/, '')
@@ -148,28 +148,28 @@ class MainController < ApplicationController
     #
     # exit
 
-    if @cbdArray[0]
-        puts 'Found CBD Data, Creating CBDdata.csv'
-        CSV.open("CBDdata.csv", "wb") do |csv|
-        csv << @cbdArray.first.keys # adds the attributes name on the first line
-        @cbdArray.each do |hash|
-          csv << hash.values
-        end
-      end
-    else
-      puts 'No CBD Data Found'
-    end
+    # if @cbdArray[0]
+    #     puts 'Found CBD Data, Creating CBDdata.csv'
+    #     CSV.open("CBDdata.csv", "wb") do |csv|
+    #     csv << @cbdArray.first.keys # adds the attributes name on the first line
+    #     @cbdArray.each do |hash|
+    #       csv << hash.values
+    #     end
+    #   end
+    # else
+    #   puts 'No CBD Data Found'
+    # end
 
     if @calloutArray[0]
-      puts 'Found Call Out Data, Creating CALLOUTdata.csv'
-      CSV.open("CALLOUTdata.csv", "wb") do |csv|
+      puts 'Found Data, Creating BOOKINGdata.csv'
+      CSV.open("BOOKINGdata.csv", "wb") do |csv|
         csv << @calloutArray.first.keys # adds the attributes name on the first line
         @calloutArray.each do |hash|
           csv << hash.values
         end
       end
     else
-      puts 'No Callout Data Found'
+      puts 'No Data Found'
     end
 
   end #events
@@ -186,8 +186,8 @@ class MainController < ApplicationController
 
   def downloadCALLOUT
     send_file(
-    "#{Rails.root}/CALLOUTdata.csv",
-     filename: "CALLOUTdata.csv",
+    "#{Rails.root}/BOOKINGdata.csv",
+     filename: "BOOKINGdata.csv",
      type: "application/csv"
      )
 
