@@ -96,6 +96,8 @@ class MainController < ApplicationController
         cbdEventsHash = { :firstName => firstName, :lastName => lastName, :phone => phone, :email => email, :bookingDateTime => bookingDateTime }
         @cbdArray.push(cbdEventsHash)
 
+
+
       end #end loop
     end #end loop
 
@@ -131,10 +133,10 @@ class MainController < ApplicationController
 
         puts "*" * 40
 
-        calloutEventsHash = { :firstName => firstName, :lastName => lastName, :phone => phone, :email => email, :address => event.location }
+        calloutEventsHash = { :Company_Name => '', :First_Name => firstName, :Last_Name => lastName, :Email => email, :Phone => phone,  :Address => event.location }
         @calloutArray.push(calloutEventsHash)
 
-
+        # Company Name,First Name,Last Name,Email,Phone,Address 1,Address 2,City,Postal Code,Country,Currency
 
 
       end #end loop
@@ -163,7 +165,7 @@ class MainController < ApplicationController
     if @calloutArray[0]
       puts 'Found Data, Creating BOOKINGdata.csv'
       CSV.open("BOOKINGdata.csv", "wb") do |csv|
-        csv << @calloutArray.first.keys # adds the attributes name on the first line
+        # csv << @calloutArray.first.keys # adds the attributes name on the first line
         @calloutArray.each do |hash|
           csv << hash.values
         end
