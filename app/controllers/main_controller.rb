@@ -133,7 +133,14 @@ class MainController < ApplicationController
 
         puts "*" * 40
 
-        calloutEventsHash = { :Company_Name => '', :First_Name => firstName, :Last_Name => lastName, :Email => email, :Phone => phone,  :Address => event.location }
+        puts "Booking #{event.start.date_time.strftime("%l:%M%p %a %d/%m/%y")}"
+        puts event.start.inspect
+
+
+        place = "Booking: " + event.start.date_time.strftime("%l:%M%p %a %d/%m/%y") + " at " + event.location
+        # puts place
+
+        calloutEventsHash = { :Company_Name => '', :First_Name => firstName, :Last_Name => lastName, :Email => email, :Phone => phone,  :Address => place }
         @calloutArray.push(calloutEventsHash)
 
         # Company Name,First Name,Last Name,Email,Phone,Address 1,Address 2,City,Postal Code,Country,Currency
