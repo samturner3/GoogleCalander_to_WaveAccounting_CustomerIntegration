@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20170517060556) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "bookings", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -21,9 +24,6 @@ ActiveRecord::Schema.define(version: 20170517060556) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
