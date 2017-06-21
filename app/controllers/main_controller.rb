@@ -1,27 +1,32 @@
 class MainController < ApplicationController
 
-  # def redirect
-  #   $client = Signet::OAuth2::Client.new({
-  #     client_id: ENV["GOOGLE_CLIENT_ID"],
-  #     client_secret: ENV["GOOGLE_CLIENT_SECRET"],
-  #     authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
-  #     scope: Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY,
-  #     redirect_uri: callback_url
-  #   })
-  #   puts '*' * 40
-  #
-  #   puts $client.authorization_uri.to_s
-  #   puts '^' * 40
-  #   # exit
-  #
-  #   redirect_to $client.authorization_uri.to_s
-  # end
+  def redirect
+    client = Signet::OAuth2::Client.new({
+      client_id: ENV["GOOGLE_CLIENT_ID"],
+      client_secret: ENV["GOOGLE_CLIENT_SECRET"],
+      authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
+      scope: Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY,
+      redirect_uri: callback_url
+    })
+    puts '*' * 40
+
+    puts client.authorization_uri.to_s
+    puts '^' * 40
+    # exit
+
+    redirect_to client.authorization_uri.to_s
+  end
 
   def callback
+      client = Signet::OAuth2::Client.new({
+        client_id: ENV["GOOGLE_CLIENT_ID"],
+        client_secret: ENV["GOOGLE_CLIENT_SECRET"],
+        token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
+        redirect_uri: callback_url,
+        code: params[:code]
+      })
 
-      # NOT IN USE. //callback', to: 'bookings#new'
-
-      response = @client.fetch_access_token!
+      response = client.fetch_access_token!
 
       session[:authorization] = response
 
@@ -29,20 +34,16 @@ class MainController < ApplicationController
     end
 
     def calendars
-    # client = Signet::OAuth2::Client.new({
-    #   client_id: Rails.application.secrets.google_client_id,
-    #   client_secret: Rails.application.secrets.google_client_secret,
-    #   token_credential_uri: 'https://accounts.google.com/o/oauth2/token'
-    # })
+    client = Signet::OAuth2::Client.new({
+      client_id: Rails.application.secrets.google_client_id,
+      client_secret: Rails.application.secrets.google_client_secret,
+      token_credential_uri: 'https://accounts.google.com/o/oauth2/token'
+    })
 
-    puts '*' * 40
-    puts 'def calendars ran!'
-    puts '*' * 40
-
-    @client.update!(session[:authorization])
+    client.update!(session[:authorization])
 
     service = Google::Apis::CalendarV3::CalendarService.new
-    service.authorization = @client
+    service.authorization = client
 
     @calendar_list = service.list_calendar_lists
   end
@@ -71,7 +72,6 @@ class MainController < ApplicationController
     @event_list.items.each do |event|
       if event.summary.start_with?('Sydney CBD')
 
-
         bookingDateTime = event.start.date_time
         puts "Date:#{bookingDateTime}"
         puts "^" * 40
@@ -92,18 +92,6 @@ class MainController < ApplicationController
         puts "Email: #{email}"
 
         puts "*" * 40
-
-        # Check if exists
-        # if new,
-          @newBooking = new.Booking
-
-          # @newBooking.firstName = firstName
-          # @newBooking.lastName = lastName
-          # @newBooking.mobile = phone
-          # @newBooking.email = email
-          # @newBooking.clientNotes = "Test Notes"
-          # @newBooking.address = null
-
 
         cbdEventsHash = { :firstName => firstName, :lastName => lastName, :phone => phone, :email => email, :bookingDateTime => bookingDateTime }
         @cbdArray.push(cbdEventsHash)
@@ -145,6 +133,9 @@ class MainController < ApplicationController
 
         calloutEventsHash = { :firstName => firstName, :lastName => lastName, :phone => phone, :email => email, :address => event.location }
         @calloutArray.push(calloutEventsHash)
+
+
+
 
       end #end loop
     end #end loop
@@ -203,7 +194,5 @@ class MainController < ApplicationController
     #  send_file(File.join(IMAGES_PATH, "image.jpg"))
 
   end
-
-
 
 end

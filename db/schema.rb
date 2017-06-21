@@ -10,39 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170522054936) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20170517060556) do
 
   create_table "bookings", force: :cascade do |t|
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.datetime "bookingTime"
-    t.string   "location"
-    t.text     "bookingNote"
-    t.text     "clientMessage"
-    t.string   "client_id"
-    t.string   "googleEventId", null: false
-    t.index ["client_id"], name: "index_bookings_on_client_id", using: :btree
-  end
-
-  create_table "clients", force: :cascade do |t|
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.string   "firstName"
-    t.string   "lastName"
-    t.string   "email",                           null: false
-    t.string   "mobile"
-    t.string   "address"
-    t.text     "clientNotes"
-    t.boolean  "testimonialSent", default: false
-  end
-
-  create_table "contacts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "clients", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
