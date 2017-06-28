@@ -235,14 +235,14 @@ class BookingsController < ApplicationController
       # puts '^' * 40
       # exit
 
-      @event_list = service.list_events("accounts@cardclonesydney.com.au",max_results: 20, single_events: true, order_by: 'startTime', time_min: Time.now.iso8601)
+      @event_list = service.list_events("accounts@cardclonesydney.com.au", single_events: true, order_by: 'startTime')
 
       @bookingsArray = []
 
       eventHash = {}
 
       @event_list.items.each do |event|
-        if event.summary.start_with?(('Sydney CBD') || ('We come to you'))
+        if event.summary.start_with?('Call Out', 'Sydney CBD')
 
 
           bookingDateTime = event.start.date_time
