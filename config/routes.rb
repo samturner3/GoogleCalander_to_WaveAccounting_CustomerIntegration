@@ -18,6 +18,8 @@ get '/bookings/index', to: 'bookings#index'
 
 get '/clients/index', to: 'clients#index'
 
+get '/clients/sendTestimonialRequest/:id', to: 'clients#sendTestimonialRequest', as: 'sendTestimonialRequest'
+
 #api
 namespace :api do
   namespace :v1 do
