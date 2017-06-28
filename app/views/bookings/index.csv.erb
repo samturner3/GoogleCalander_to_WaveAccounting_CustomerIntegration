@@ -1,0 +1,7 @@
+<%#- headers = ['Name', 'Email'] -%>
+<%#= CSV.generate_line headers %>
+<%- @bookings.each do |booking|-%>
+  <%#- if booking.bookingTime.future? -%>
+    <%= CSV.generate_line([nil,booking.client.firstName, booking.client.lastName, booking.client.email, booking.client.mobile, booking.client.address ]).html_safe -%>
+  <%#- end -%>
+<%- end -%>

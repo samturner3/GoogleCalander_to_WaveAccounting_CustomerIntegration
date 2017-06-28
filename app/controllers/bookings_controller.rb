@@ -26,6 +26,14 @@ class BookingsController < ApplicationController
   def index
     @bookings = Booking.all.order 'created_at DESC'
     @clients = Client.all
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        headers['Content-Disposition'] = "attachment; filename=\"user-list.csv\""
+        headers['Content-Type'] ||= 'text/csv'
+      end
+    end
   end
 
   # GET /bookings/1
