@@ -235,7 +235,7 @@ class BookingsController < ApplicationController
       # puts '^' * 40
       # exit
 
-      @event_list = service.list_events("accounts@cardclonesydney.com.au",max_results: 20, single_events: true, order_by: 'startTime', time_min: Time.now.iso8601)
+      @event_list = service.list_events("accounts@cardclonesydney.com.au", single_events: true, order_by: 'startTime')
 
       @bookingsArray = []
 
