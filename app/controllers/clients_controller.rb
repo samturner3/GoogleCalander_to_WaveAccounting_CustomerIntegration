@@ -61,6 +61,17 @@ class ClientsController < ApplicationController
     end
   end
 
+  def sendTestimonialRequest
+    @client = Client.find(params[:id])
+    logger.warn "It works!"
+    ModelMailer.send_testimonial_request(@client).deliver
+    @client.update(testimonialSent: true)
+    @client.update(testimonial_request_sent: DateTime.now)
+    puts "sendTestimonialRequest Triggered for:"
+    puts @client
+    redirect_back(fallback_location: bookings_index_path)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_client

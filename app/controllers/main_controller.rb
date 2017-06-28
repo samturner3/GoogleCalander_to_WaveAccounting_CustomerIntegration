@@ -1,32 +1,27 @@
 class MainController < ApplicationController
 
-  def redirect
-    client = Signet::OAuth2::Client.new({
-      client_id: ENV["GOOGLE_CLIENT_ID"],
-      client_secret: ENV["GOOGLE_CLIENT_SECRET"],
-      authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
-      scope: Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY,
-      redirect_uri: callback_url
-    })
-    puts '*' * 40
-
-    puts client.authorization_uri.to_s
-    puts '^' * 40
-    # exit
-
-    redirect_to client.authorization_uri.to_s
-  end
+  # def redirect
+  #   $client = Signet::OAuth2::Client.new({
+  #     client_id: ENV["GOOGLE_CLIENT_ID"],
+  #     client_secret: ENV["GOOGLE_CLIENT_SECRET"],
+  #     authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
+  #     scope: Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY,
+  #     redirect_uri: callback_url
+  #   })
+  #   puts '*' * 40
+  #
+  #   puts $client.authorization_uri.to_s
+  #   puts '^' * 40
+  #   # exit
+  #
+  #   redirect_to $client.authorization_uri.to_s
+  # end
 
   def callback
-      client = Signet::OAuth2::Client.new({
-        client_id: ENV["GOOGLE_CLIENT_ID"],
-        client_secret: ENV["GOOGLE_CLIENT_SECRET"],
-        token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
-        redirect_uri: callback_url,
-        code: params[:code]
-      })
 
-      response = client.fetch_access_token!
+      # NOT IN USE. //callback', to: 'bookings#new'
+
+      response = @client.fetch_access_token!
 
       session[:authorization] = response
 
@@ -34,16 +29,20 @@ class MainController < ApplicationController
     end
 
     def calendars
-    client = Signet::OAuth2::Client.new({
-      client_id: Rails.application.secrets.google_client_id,
-      client_secret: Rails.application.secrets.google_client_secret,
-      token_credential_uri: 'https://accounts.google.com/o/oauth2/token'
-    })
+    # client = Signet::OAuth2::Client.new({
+    #   client_id: Rails.application.secrets.google_client_id,
+    #   client_secret: Rails.application.secrets.google_client_secret,
+    #   token_credential_uri: 'https://accounts.google.com/o/oauth2/token'
+    # })
 
-    client.update!(session[:authorization])
+    puts '*' * 40
+    puts 'def calendars ran!'
+    puts '*' * 40
+
+    @client.update!(session[:authorization])
 
     service = Google::Apis::CalendarV3::CalendarService.new
-    service.authorization = client
+    service.authorization = @client
 
     @calendar_list = service.list_calendar_lists
   end
@@ -72,6 +71,7 @@ class MainController < ApplicationController
     @event_list.items.each do |event|
       if event.summary.start_with?('Sydney CBD')
 
+
         bookingDateTime = event.start.date_time
         puts "Date:#{bookingDateTime}"
         puts "^" * 40
@@ -93,10 +93,20 @@ class MainController < ApplicationController
 
         puts "*" * 40
 
+        # Check if exists
+        # if new,
+          @newBooking = new.Booking
+
+          # @newBooking.firstName = firstName
+          # @newBooking.lastName = lastName
+          # @newBooking.mobile = phone
+          # @newBooking.email = email
+          # @newBooking.clientNotes = "Test Notes"
+          # @newBooking.address = null
+
+
         cbdEventsHash = { :firstName => firstName, :lastName => lastName, :phone => phone, :email => email, :bookingDateTime => bookingDateTime }
         @cbdArray.push(cbdEventsHash)
-
-
 
       end #end loop
     end #end loop
@@ -114,7 +124,7 @@ class MainController < ApplicationController
     calloutEventsHash = {}
 
     @event_list.items.each do |event|
-      if event.summary.start_with?('Call Out', 'Sydney CBD')
+      if event.summary.start_with?('We come to you')
 
         nameAndNumber = event.summary.partition('for').last
         phone = nameAndNumber.gsub(/[^\d]/, '')
@@ -133,18 +143,8 @@ class MainController < ApplicationController
 
         puts "*" * 40
 
-        puts "Booking #{event.start.date_time.strftime("%l:%M%p %a %d/%m/%y")}"
-        puts event.start.inspect
-
-
-        place = "Booking: " + event.start.date_time.strftime("%l:%M%p %a %d/%m/%y") + " at " + event.location
-        # puts place
-
-        calloutEventsHash = { :Company_Name => '', :First_Name => firstName, :Last_Name => lastName, :Email => email, :Phone => phone,  :Address => place }
+        calloutEventsHash = { :firstName => firstName, :lastName => lastName, :phone => phone, :email => email, :address => event.location }
         @calloutArray.push(calloutEventsHash)
-
-        # Company Name,First Name,Last Name,Email,Phone,Address 1,Address 2,City,Postal Code,Country,Currency
-
 
       end #end loop
     end #end loop
@@ -157,28 +157,28 @@ class MainController < ApplicationController
     #
     # exit
 
-    # if @cbdArray[0]
-    #     puts 'Found CBD Data, Creating CBDdata.csv'
-    #     CSV.open("CBDdata.csv", "wb") do |csv|
-    #     csv << @cbdArray.first.keys # adds the attributes name on the first line
-    #     @cbdArray.each do |hash|
-    #       csv << hash.values
-    #     end
-    #   end
-    # else
-    #   puts 'No CBD Data Found'
-    # end
+    if @cbdArray[0]
+        puts 'Found CBD Data, Creating CBDdata.csv'
+        CSV.open("CBDdata.csv", "wb") do |csv|
+        csv << @cbdArray.first.keys # adds the attributes name on the first line
+        @cbdArray.each do |hash|
+          csv << hash.values
+        end
+      end
+    else
+      puts 'No CBD Data Found'
+    end
 
     if @calloutArray[0]
-      puts 'Found Data, Creating BOOKINGdata.csv'
-      CSV.open("BOOKINGdata.csv", "wb") do |csv|
-        # csv << @calloutArray.first.keys # adds the attributes name on the first line
+      puts 'Found Call Out Data, Creating CALLOUTdata.csv'
+      CSV.open("CALLOUTdata.csv", "wb") do |csv|
+        csv << @calloutArray.first.keys # adds the attributes name on the first line
         @calloutArray.each do |hash|
           csv << hash.values
         end
       end
     else
-      puts 'No Data Found'
+      puts 'No Callout Data Found'
     end
 
   end #events
@@ -195,13 +195,15 @@ class MainController < ApplicationController
 
   def downloadCALLOUT
     send_file(
-    "#{Rails.root}/BOOKINGdata.csv",
-     filename: "BOOKINGdata.csv",
+    "#{Rails.root}/CALLOUTdata.csv",
+     filename: "CALLOUTdata.csv",
      type: "application/csv"
      )
 
     #  send_file(File.join(IMAGES_PATH, "image.jpg"))
 
   end
+
+
 
 end

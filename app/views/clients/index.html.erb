@@ -12,9 +12,13 @@
   <tbody>
     <% @clients.each do |client| %>
       <tr>
-        <td><%= link_to 'Show', client %></td>
-        <td><%= link_to 'Edit', edit_client_path(client) %></td>
-        <td><%= link_to 'Destroy', client, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= client.firstName %></td>
+        <td><%= client.lastName %></td>
+        <td><%= client.email %></td>
+        <td><%= client.mobile %></td>
+        <td><%#= link_to 'Show', client %></td>
+        <td><%#= link_to 'Edit', edit_client_path(client) %></td>
+        <td><%#= link_to 'Destroy', client, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -22,4 +26,4 @@
 
 <br>
 
-<%= link_to 'New Client', new_client_path %>
+<%#= link_to 'New Client', new_client_path %>
