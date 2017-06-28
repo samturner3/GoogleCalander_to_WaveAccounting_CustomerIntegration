@@ -266,6 +266,9 @@ class BookingsController < ApplicationController
 
           puts "*" * 40
 
+          place = "Booking: " + event.start.date_time.strftime("%l:%M%p %a %d/%m/%y") + " at " + event.location
+          # puts place
+
           # Check if exists
           # if new,
             # @newBooking = new.Booking
@@ -278,7 +281,7 @@ class BookingsController < ApplicationController
             # @newBooking.address = null
 
 
-          eventHash = { :googleEventId => event.id ,:firstName => firstName, :lastName => lastName, :phone => phone, :email => email, :bookingDateTime => bookingDateTime, :address => event.location }
+          eventHash = { :googleEventId => event.id ,:firstName => firstName, :lastName => lastName, :phone => phone, :email => email, :bookingDateTime => bookingDateTime, :address => place }
 
           # puts '*' * 40
           # puts 'GOT A BOOKING!!!!'

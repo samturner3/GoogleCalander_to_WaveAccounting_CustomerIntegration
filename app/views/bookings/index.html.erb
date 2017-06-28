@@ -9,8 +9,8 @@
       <th>Last Name</th>
       <th>Email</th>
       <th>Mobile</th>
-      <th>Booking Day</th>
-      <th>Booking Time</th>
+      <th>Booking</th>
+      <!-- <th>Booking Time</th> -->
       <th>Created At</th>
       <th>Updated At</th>
     </tr>
@@ -24,8 +24,8 @@
           <td><%= booking.client.lastName %></td>
           <td><%= booking.client.email %></td>
           <td><%= booking.client.mobile %></td>
-          <td><%= booking.bookingTime.strftime("%a #{booking.bookingTime.day.ordinalize}") %></td>
-          <td><%= booking.bookingTime.strftime("%l:%M %p") %></td>
+          <td><%= booking.location %></td>
+          <!-- <td><%#= booking.bookingTime.strftime("%l:%M %p") %></td> -->
           <td><%= booking.created_at.strftime("%I:%M %p") %></td>
           <td><%= booking.updated_at.strftime("%I:%M %p") %></td>
           <td><%#= @client.booking.client_id.firstName %></td>
