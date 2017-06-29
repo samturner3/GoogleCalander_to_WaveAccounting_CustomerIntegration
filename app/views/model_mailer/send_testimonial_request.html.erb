@@ -1,17 +1,11 @@
 <p>
-TrustSpotDirectEmail<br>
-[name]<%= @client.firstName %> <%= @client.lastName %>[/name]<br>
-[email]<%= @client.email %>/email]
+A Testimonal Request was sent to trust spot.
 </p>
 <p>
-This is a testimonal request test.
-</p>
-<p>
-  Send testimonial test for :<%= @client.firstName %><br>
-  For: <%= @client.email %>
+  Send testimonial for:<%= @client.firstName %><br>
 </p>
 
 TrustSpotDirectEmail
 [name]<%= @client.firstName %> <%= @client.lastName %>[/name]
 [email]<%= @client.email %>[/email]
-[order][/order]
+[order]<%= @booking.bookingTime.strftime("%a #{@booking.bookingTime.day.ordinalize} %b %y") %>[/order]

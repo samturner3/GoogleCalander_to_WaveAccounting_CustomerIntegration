@@ -1,9 +1,8 @@
-This is a testimonal request test.
+A Testimonal Request was sent to trust spot.
 
-  Send testimonial test for :<%= @client.firstName %>
-  For: <%= @client.email %>
+  Send testimonial for:<%= @client.firstName %><br>
 
-TrustSpotDirectEmail
-[name]<%= @client.firstName %> <%= @client.lastName %>[/name]
-[email]<%= @client.email %>[/email]
-[order][/order]
+  TrustSpotDirectEmail
+  [name]<%= @client.firstName %> <%= @client.lastName %>[/name]
+  [email]<%= @client.email %>[/email]
+  [order]<%= @booking.bookingTime.strftime("%a #{@booking.bookingTime.day.ordinalize} %b %y") %>[/order]

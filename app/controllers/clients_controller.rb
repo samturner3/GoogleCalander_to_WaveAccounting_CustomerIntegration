@@ -62,13 +62,14 @@ class ClientsController < ApplicationController
   end
 
   def sendTestimonialRequest
-    @client = Client.find(params[:id])
+    @booking = Booking.find(params[:id])
+    @client = @booking.client
     logger.warn "It works!"
-    ModelMailer.send_testimonial_request(@client).deliver
-    @client.update(testimonialSent: true)
-    @client.update(testimonial_request_sent: DateTime.now)
+    ModelMailer.send_testimonial_request(@booking, @client).deliver
+    @booking.client.update(testimonialSent: true)
+    @booking.client.update(testimonial_request_sent: DateTime.now)
     puts "sendTestimonialRequest Triggered for:"
-    puts @client
+    puts @booking.client
     redirect_back(fallback_location: bookings_index_path)
   end
 

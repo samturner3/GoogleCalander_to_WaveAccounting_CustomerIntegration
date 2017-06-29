@@ -5,7 +5,8 @@ class ModelMailer < ApplicationMailer
   #
   #   en.model_mailer.send_testimonial_request.subject
   #
-  def send_testimonial_request(client)
+  def send_testimonial_request(booking, client)
+    @booking = booking
     @client = client
     mail  to: "accounts@cardclonesydney.com.au", subject: "Testimonial Request Sent"
   end

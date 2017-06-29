@@ -66,7 +66,7 @@
           <!-- <td><%#= @client.booking.client_id.firstName %></td> -->
           <td><%= booking.client.testimonialSent %></td>
           <% if booking.client.testimonialSent === false %>
-            <td><%= link_to "Send Testimonial", sendTestimonialRequest_path(booking.client.id)%></td>
+            <td><%= link_to "Send Testimonial", sendTestimonialRequest_path(booking.id)%></td>
           <% else %>
             <td>Sent on <%= booking.client.testimonial_request_sent.strftime("%-d/%m/%y") %></td>
           <% end %>
