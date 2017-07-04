@@ -72,6 +72,8 @@ class BookingsController < ApplicationController
         clientToUpdate.update(lastName: hash[:lastName])
         clientToUpdate.update(mobile: hash[:phone])
 
+        @client = clientToUpdate
+
       else
 
         puts '*' * 40
