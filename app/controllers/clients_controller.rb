@@ -19,6 +19,9 @@ class ClientsController < ApplicationController
 
   # GET /clients/1/edit
   def edit
+    puts "editing clien with id"
+    puts params[:id]
+    @client = Client.find(params[:id])
   end
 
   # POST /clients
@@ -81,6 +84,6 @@ class ClientsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def client_params
-      params.fetch(:client, {})
+      params.fetch(:client, {}).permit(:firstName, :lastName, :email, :mobile, :address, :clientNotes, :testimonialSent)
     end
 end

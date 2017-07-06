@@ -101,7 +101,7 @@ class MainController < ApplicationController
           # @newBooking.lastName = lastName
           # @newBooking.mobile = phone
           # @newBooking.email = email
-          # @newBooking.clientNotes = "Test Notes"
+          # @newBooking.clientNotes = ""
           # @newBooking.address = null
 
 

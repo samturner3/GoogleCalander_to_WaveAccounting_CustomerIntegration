@@ -2,6 +2,10 @@
   <div class="container-fluid">
     <div class="navbar-header">
     </div>
+    <ul class="nav navbar-nav navbar-left">
+      <li><%= link_to 'Bookings', bookings_index_path %></li>
+      <li><%= link_to 'Clients', clients_path %></li>
+    </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><%= render 'layouts/login_items' %></li>
       <li><%= render 'layouts/registration_items' %></li>

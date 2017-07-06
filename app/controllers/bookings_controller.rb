@@ -86,7 +86,7 @@ class BookingsController < ApplicationController
         @client.lastName = hash[:lastName]
         @client.mobile = hash[:phone]
         @client.email = hash[:email]
-        @client.clientNotes = "Test Notes"
+        @client.clientNotes = ""
         # @client.address = null
         @client.save
 
@@ -297,7 +297,7 @@ class BookingsController < ApplicationController
             # @newBooking.lastName = lastName
             # @newBooking.mobile = phone
             # @newBooking.email = email
-            # @newBooking.clientNotes = "Test Notes"
+            # @newBooking.clientNotes = ""
             # @newBooking.address = null
 
 
