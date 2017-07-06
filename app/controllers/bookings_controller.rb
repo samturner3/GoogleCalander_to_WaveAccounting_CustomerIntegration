@@ -134,6 +134,7 @@ class BookingsController < ApplicationController
 
     if !(@bookingsArray.find { |h| h[:googleEventId] == booking.googleEventId })
       puts "THIS BOOKING EXISTS IN OUR DB BUT NOT IN GOOGLE, SHOULD BE DELETED"
+      booking.destroy
      else
       puts "This booking is ok, exists in our db and google."
     end
