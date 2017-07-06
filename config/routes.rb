@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :contacts
+  resources :clients do
+    resources :bookings
+  end
   devise_for :users, controllers: { registrations: "registrations"}
 
 

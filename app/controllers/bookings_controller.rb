@@ -74,7 +74,7 @@ class BookingsController < ApplicationController
 
         @client = clientToUpdate
 
-      else
+      else #If no existing client found
 
         puts '*' * 40
         puts 'No Duplucate found. Creating new Client Record'
@@ -90,9 +90,9 @@ class BookingsController < ApplicationController
         # @client.address = null
         @client.save
 
-      end
+      end # end new client check
 
-      if Booking.find_by googleEventId: hash[:googleEventId]
+      if Booking.find_by googleEventId: hash[:googleEventId] ## Find existing booking form hash
 
         puts '*' * 40
         puts 'Found Duplucate Booking! Checking Record for Updates'
@@ -106,7 +106,7 @@ class BookingsController < ApplicationController
         bookingToUpdate.update(location: hash[:address])
         # + client message
 
-      else
+      else ## If no client matches, create new client
 
         puts '*' * 40
         puts 'No Duplucate found. Creating new Booking Record'
@@ -120,8 +120,25 @@ class BookingsController < ApplicationController
         @booking.location = hash[:address]
 
         @booking.save
-    end #end if
-  end #end for each
+    end #end if Find existing booking form hash
+  end #end for each booking found in hash
+
+  ## TO-DO: Go through upcoming bookings in db, and make sure they exist in the hash.
+  ## If not, booking must have been destroyed so remove it from our db.
+
+  Booking.all.where('"bookingTime" > ?', Time.now).each do |booking|
+    puts '*' * 40
+    puts 'Found upcoming booking in db !'
+    puts booking.location
+    puts '^' * 40
+
+    if !(@bookingsArray.find { |h| h[:googleEventId] == booking.googleEventId })
+      puts "THIS BOOKING EXISTS IN OUR DB BUT NOT IN GOOGLE, SHOULD BE DELETED"
+     else
+      puts "This booking is ok, exists in our db and google."
+    end
+
+  end
 
     redirect_to bookings_index_path
 
@@ -237,7 +254,7 @@ class BookingsController < ApplicationController
       # puts '^' * 40
       # exit
 
-      @event_list = service.list_events("accounts@cardclonesydney.com.au",max_results: 20, single_events: true, order_by: 'startTime', time_min: Time.now.iso8601)
+      @event_list = service.list_events("accounts@cardclonesydney.com.au",max_results: 50, single_events: true, order_by: 'startTime', time_min: Time.now.iso8601)
 
       @bookingsArray = []
 
