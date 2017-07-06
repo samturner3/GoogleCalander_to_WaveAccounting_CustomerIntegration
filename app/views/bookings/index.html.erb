@@ -2,13 +2,14 @@
 
 <h1>Upcoming Bookings</h1>
 
-<table class="table">
+<table class="table sortable">
   <thead>
     <tr>
       <th>First Name</th>
       <th>Last Name</th>
       <th>Email</th>
       <th>Mobile</th>
+      <th>Booking DateTime</th>
       <th>Booking</th>
       <!-- <th>Booking Time</th> -->
       <!-- <th>Created At</th> -->
@@ -23,8 +24,9 @@
           <td><%= booking.client.lastName %></td>
           <td><%= booking.client.email %></td>
           <td><%= booking.client.mobile %></td>
+          <td><%= booking.bookingTime %></td>
           <td><%= booking.location %></td>
-          <!-- <td><%#= booking.bookingTime.strftime("%l:%M %p") %></td> -->
+
           <!-- <td><%#= booking.created_at.strftime("%I:%M %p") %></td> -->
 
 
@@ -36,7 +38,7 @@
 <%= link_to 'Download CSV list', bookings_index_path(format: :csv) %>
 <h1>Past Bookings</h1>
 
-<table class="table">
+<table class="table sortable">
   <thead>
     <tr>
       <th>First Name</th>
@@ -44,7 +46,7 @@
       <th>Email</th>
       <th>Mobile</th>
       <th>Booking Day</th>
-      <th>Booking Time</th>
+      <th>Booking DateTime</th>
       <th>Testimonial Sent?</th>
       <!-- <th>Updated At</th> -->
     </tr>
@@ -59,7 +61,7 @@
           <td><%= booking.client.email %></td>
           <td><%= booking.client.mobile %></td>
           <td><%= booking.bookingTime.strftime("%a #{booking.bookingTime.day.ordinalize} %b %y") %></td>
-          <td><%= booking.bookingTime.strftime("%l:%M %p") %></td>
+          <td><%= booking.bookingTime %></td>
           <!-- <td><%#= @client.booking.client_id.firstName %></td> -->
           <td><%= booking.client.testimonialSent %></td>
           <% if booking.client.testimonialSent === false %>
