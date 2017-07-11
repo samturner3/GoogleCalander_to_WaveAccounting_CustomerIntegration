@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170628034606) do
+ActiveRecord::Schema.define(version: 20170711131930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,7 +23,8 @@ ActiveRecord::Schema.define(version: 20170628034606) do
     t.text     "bookingNote"
     t.text     "clientMessage"
     t.string   "client_id"
-    t.string   "googleEventId", null: false
+    t.string   "googleEventId"
+    t.string   "acuityEventId"
     t.index ["client_id"], name: "index_bookings_on_client_id", using: :btree
   end
 

@@ -6,6 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'devise'
+gem 'httparty'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'jquery-turbolinks'
 gem 'google-api-client', '~> 0.9', require: 'google/apis/calendar_v3'
