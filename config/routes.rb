@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'acuity/test'
+
   resources :clients do
     resources :bookings
   end
@@ -7,10 +9,10 @@ Rails.application.routes.draw do
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-root 'bookings#redirect'
+root 'bookings#new'
 
-get '/redirect', to: 'bookings#redirect', as: 'redirect'
-get '/callback', to: 'bookings#new', as: 'callback'
+# get '/redirect', to: 'bookings#redirect', as: 'redirect'
+# get '/callback', to: 'bookings#new', as: 'callback'
 get '/calendars', to: 'main#calendars', as: 'calendars'
 get '/events/:calendar_id', to: 'main#events', as: 'events', calendar_id: /[^\/]+/
 get '/calendars/downloadCBD', to: 'main#downloadCBD'
@@ -18,6 +20,7 @@ get '/calendars/downloadCALLOUT', to: 'main#downloadCALLOUT'
 
 get '/bookings/index', to: 'bookings#index'
 
+get '/acuity/test', to: 'acuity#test'
 
 get '/clients/sendTestimonialRequest/:id', to: 'clients#sendTestimonialRequest', as: 'sendTestimonialRequest'
 
